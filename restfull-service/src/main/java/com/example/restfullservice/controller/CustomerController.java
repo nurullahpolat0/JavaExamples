@@ -3,25 +3,25 @@ package com.example.restfullservice.controller;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.restfullservice.model.Customer;
+import com.example.restfullservice.service.CustomerServiceImpl;
 
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
 	
-	Customer customer;
+	@Autowired
+	CustomerServiceImpl customerServiceImpl;
 	
-	@GetMapping("/users")
+	@GetMapping("/customers")
 	public List <Customer> getAllCustomer(){
 		
-		customer = new Customer(1,"nurullah",17);
-		List<Customer> customerList = new LinkedList<Customer>();
-		customerList.add(customer);
-		return customerList;
+		return customerServiceImpl.getAllCustomer();
 	}
 
 }
