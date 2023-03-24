@@ -2,18 +2,28 @@ package com.example.restfullservice.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "customer")
 public class Customer {
 	
 	@Id
-	@Column
+	@Column(name = "id")
+	@GeneratedValue
 	private int id;
-	@Column
+	
+	@Column(name = "name")
 	private String name;
-	@Column
+	
+	@Column(name = "age")
 	private int age;
+	
+	public Customer() {
+		
+	}
 	
 	public Customer(int id, String name, int age) {
 		super();
