@@ -8,6 +8,8 @@ import java.util.List;
 /**
  * @author Nurullah Polat
  *
+ *This is a interface class for CustomerService class
+ *
  */
 
 import org.springframework.stereotype.Service;
@@ -20,5 +22,7 @@ public interface CustomerService {
 	public void saveCustomer(Customer customer);
 	
 	public List<Customer> getAllCustomer();
+	
+    public void deleteCustomerById(int id);
 
 }
