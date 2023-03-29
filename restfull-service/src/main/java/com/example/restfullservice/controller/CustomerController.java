@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.restfullservice.model.Customer;
+import com.example.restfullservice.dto.CustomerDto;
 import com.example.restfullservice.service.CustomerServiceImpl;
 
 /**
@@ -65,10 +65,10 @@ public class CustomerController {
 	 * This method calls service class in order to save customer data to database.
 	 */	
 	@PostMapping("/save")
-	public ResponseEntity<?> saveCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<?> saveCustomer(@RequestBody CustomerDto customerDto) {
 		
 		try {
-			customerServiceImpl.saveCustomer(customer);
+			customerServiceImpl.saveCustomer(customerDto);
 			return new ResponseEntity<>("Data is saved", HttpStatus.CREATED);
 		} catch (Exception e){
 			return new ResponseEntity<>("Error ocurred : "+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

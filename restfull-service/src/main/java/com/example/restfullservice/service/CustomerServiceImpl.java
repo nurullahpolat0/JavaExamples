@@ -1,8 +1,12 @@
 package com.example.restfullservice.service;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import com.example.restfullservice.dto.CustomerDto;
 import com.example.restfullservice.model.Customer;
 import com.example.restfullservice.repository.CustomerRepository;
 
@@ -20,21 +24,28 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	private final CustomerRepository customerRepository;
 	
-	public CustomerServiceImpl(CustomerRepository customerRepository) {
+	private ModelMapper modelMapper;
+	
+	public CustomerServiceImpl(CustomerRepository customerRepository, ModelMapper modelMapper) {
 		this.customerRepository = customerRepository;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
-	public void saveCustomer(Customer customer) {
+	public void saveCustomer(CustomerDto customerDto) {
 		
+		Customer customer = modelMapper.map(customerDto, Customer.class);
 		customerRepository.save(customer);
 		
 	}
 
 	@Override
-	public List<Customer> getAllCustomer() {
+	public List<CustomerDto> getAllCustomer() {
 		
-		return customerRepository.findAll();
+		List<Customer> customers = customerRepository.findAll();
+		
+		return customers.stream().map((customer) -> modelMapper.map(customer, CustomerDto.class))
+                .collect(Collectors.toList());
 	}
 
 	@Override

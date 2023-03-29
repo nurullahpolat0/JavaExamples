@@ -14,14 +14,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.restfullservice.model.Customer;
+import com.example.restfullservice.dto.CustomerDto;
 
 @Service
 public interface CustomerService {
 	
-	public void saveCustomer(Customer customer);
+	public void saveCustomer(CustomerDto customerDto);
 	
-	public List<Customer> getAllCustomer();
+	public List<CustomerDto> getAllCustomer();
 	
     public void deleteCustomerById(int id);
 
