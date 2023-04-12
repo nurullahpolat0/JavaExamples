@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.restfullservice.dto.CustomerDto;
 import com.example.restfullservice.service.CustomerServiceImpl;
 
@@ -30,7 +30,6 @@ public class CustomerController {
 	public CustomerController(CustomerServiceImpl customerServiceImpl) {
 		this.customerServiceImpl = customerServiceImpl;
 	}
-	
 	
 	/**
 	 * The @GetMapping annotation is a composed version of @RequestMapping annotation that acts as a shortcut 
@@ -70,6 +69,39 @@ public class CustomerController {
 		try {
 			customerServiceImpl.saveCustomer(customerDto);
 			return new ResponseEntity<>("Data is saved", HttpStatus.CREATED);
+		} catch (Exception e){
+			return new ResponseEntity<>("Error ocurred : "+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
+	}
+	
+	/**
+	 * 
+	 * The @PutMapping is a composed annotation that acts as a shortcut for @RequestMapping(method = RequestMethod.PUT)
+	 * 
+	 * This method calls service class in order to update customer data to database.
+	 * 
+	 * @param customerDto
+	 * @param id
+	 * @return
+	 */
+	@PutMapping("/update/{id}")
+	public ResponseEntity<?> updateCustomer(@RequestBody CustomerDto customerDto, @PathVariable int id ){
+		
+		try {
+		
+		CustomerDto getCustomerDto = customerServiceImpl.findCustomerById(id);
+		
+		if(getCustomerDto != null) {
+			getCustomerDto.setId(id);
+			getCustomerDto.setName(customerDto.getName());
+			getCustomerDto.setAge(customerDto.getAge());
+			customerServiceImpl.saveCustomer(getCustomerDto);
+			return new ResponseEntity<>("Data is updated", HttpStatus.OK);
+		}else {
+			customerServiceImpl.saveCustomer(customerDto);
+			return new ResponseEntity<>("Data is saved", HttpStatus.OK);
+		}
+		
 		} catch (Exception e){
 			return new ResponseEntity<>("Error ocurred : "+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}	

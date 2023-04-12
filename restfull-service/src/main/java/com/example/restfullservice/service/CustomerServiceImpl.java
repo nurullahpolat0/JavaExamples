@@ -1,6 +1,7 @@
 package com.example.restfullservice.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -53,5 +54,14 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		customerRepository.deleteById(id);
 	}
+
+
+	@Override
+	public CustomerDto findCustomerById(int id) {
+		Optional<Customer> optionalCustomer = customerRepository.findById(id);
+		CustomerDto customerDto = modelMapper.map(optionalCustomer, CustomerDto.class);
+		return customerDto;
+	}
+
 
 }

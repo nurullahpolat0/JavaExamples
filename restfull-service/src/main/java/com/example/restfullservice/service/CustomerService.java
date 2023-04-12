@@ -23,6 +23,8 @@ public interface CustomerService {
 	
 	public List<CustomerDto> getAllCustomer();
 	
+	public CustomerDto findCustomerById(int id);
+	
     public void deleteCustomerById(int id);
 
 }
